@@ -10,8 +10,7 @@ import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/scr
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/screens/editAddreddRestaurant.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/screens/editNameRestrant.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/screens/editPhotoRestaurant.dart';
-import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class StoreRestaurant extends StatefulWidget {
   @override
@@ -24,6 +23,8 @@ class _StoreRestaurantState extends State<StoreRestaurant> {
   String uidUser, uidRest, name, image, address;
   bool status = true;
   File file;
+
+  final genQRkey = GlobalKey();
 
   @override
   void initState() {
@@ -93,13 +94,28 @@ class _StoreRestaurantState extends State<StoreRestaurant> {
 
   Center showHaveData() {
     return Center(
-      child: Column(
-        children: [
-          showTextRestaurant(),
-          showImage(),
-          editNameRest(),
-          editAddressRest(),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            showTextRestaurant(),
+            showImage(),
+            editNameRest(),
+            editAddressRest(),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 30),
+              width: 200,
+              height: 200,
+              child: RepaintBoundary(
+                key: genQRkey,
+                child: QrImage(
+                  data: uidUser,
+                  version: QrVersions.auto,
+                  size: 200.0,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

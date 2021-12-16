@@ -32,12 +32,12 @@ class _HistoryUserState extends State<HistoryUser> {
                     Tab(
                       icon: Icon(
                         Icons.description_sharp,
-                      ),
+                      ),text: 'List Queue',
                     ),
                     Tab(
                       icon: Icon(
                         Icons.history_outlined,
-                      ),
+                      ),text: 'History Queue',
                     ),
                   ],
                 ),

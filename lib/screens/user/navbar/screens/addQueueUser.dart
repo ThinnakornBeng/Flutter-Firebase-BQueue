@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -35,7 +34,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
 
   double screens;
   int amount = 0;
-  int queueAmount = 0;
+  int queueAmount;
 
   // DateTime
   var dateTimeNow;
@@ -54,6 +53,9 @@ class _AddQueueUserState extends State<AddQueueUser> {
     initializeDateFormatting();
     findToken();
     readQueueData();
+    if (queueAmount == null) {
+      queueAmount = 0;
+    }
     // print(uidRes);
   }
 
@@ -227,10 +229,12 @@ class _AddQueueUserState extends State<AddQueueUser> {
                         Icons.place_rounded,
                         color: Colors.red,
                       ),
-                      Text(
-                        '  ${restaurantModel.address}',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                      Container(width: 155,
+                        child: Text(
+                          '  ${restaurantModel.address}',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),
@@ -396,7 +400,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
             String uidUser = event.uid;
             QueueModel queueModel = QueueModel(
               date: date,
-              time: time,
+              time: Timestamp.fromDate(dateTimeNow),
               peopleAmount: peopleAmount,
               nameRest: restaurantModel.nameRes,
               tableType: typeTable,
