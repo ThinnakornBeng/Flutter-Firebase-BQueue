@@ -1,13 +1,15 @@
-import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/user_model.dart';
+import 'package:flutter_application_beng_queue_app/screens/forgotPassword.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/index_restaurant_nav.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/indexUserNav.dart';
 import 'package:flutter_application_beng_queue_app/screens/register.dart';
 import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -22,11 +24,80 @@ class _AuthenticationState extends State<Authentication> {
   String email, password, name, uid, avatarUrl;
   bool status = true;
   String typeUser = 'user';
+  String token, titleNoti, bodyNoti;
+
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  InitializationSettings initializationSettings;
+  AndroidInitializationSettings androidInitializationSettings;
 
   @override
   void initState() {
     super.initState();
-    checkStatus();
+    setUPMessaging();
+    // setUpNotification();
+  }
+
+  Future<void> setUpNotification() async {
+    androidInitializationSettings = AndroidInitializationSettings('app_icon');
+    initializationSettings =
+        InitializationSettings(android: androidInitializationSettings);
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: onselectNoti,
+    );
+  }
+
+  Future<void> onselectNoti(String string) async {
+    if (string != null) {
+      print('Doing ??? Aletr Click Noti');
+    }
+  }
+
+  Future<void> setUPMessaging() async {
+    Firebase.initializeApp().then((value) async {
+      FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+      token = await firebaseMessaging.getToken();
+      print('Token is ===>>> $token');
+      checkStatus();
+    });
+
+    // for FonEnd Service
+    FirebaseMessaging.onMessage.listen((event) {
+      titleNoti = event.notification.title;
+      bodyNoti = event.notification.body;
+      // print('Form Fontend titleNoti == $titleNoti, bodeyNoti == $bodyNoti');
+      // processShoeLocalNoti();
+    });
+
+    // for BlackEnd Service
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      titleNoti = event.notification.title;
+      bodyNoti = event.notification.body;
+      // print('form BlackEnd titleNoti == $titleNoti, bodeyNoti == $bodyNoti');
+      // processShoeLocalNoti();
+    });
+  }
+
+  Future<void> processShoeLocalNoti() async {
+    print('processShoeLocalNotiWork');
+    AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      priority: Priority.high,
+      importance: Importance.max,
+      ticker: 'ticker',
+    );
+
+    NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      titleNoti,
+      bodyNoti,
+      notificationDetails,
+    );
   }
 
   Future<Null> checkStatus() async {
@@ -37,6 +108,18 @@ class _AuthenticationState extends State<Authentication> {
             if (event != null) {
               String uid = event.uid;
               // print('uid = $uid');
+
+              Map<String, dynamic> map = {};
+              map['token'] = token;
+
+              await FirebaseFirestore.instance
+                  .collection('userTable')
+                  .doc(uid)
+                  .update(map)
+                  .then(
+                    (value) => print('Up Date Token success'),
+                  );
+
               FirebaseFirestore.instance
                   .collection('userTable')
                   .doc(uid)
@@ -95,17 +178,25 @@ class _AuthenticationState extends State<Authentication> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(width: screens*0.4,
+                    Container(
+                        width: screens * 0.4,
                         child: Image.asset(
-                      'images/logo.png',
-                      width: screens*0.4,
-                    )),
+                          'images/logo.png',
+                          width: screens * 0.4,
+                        )),
                     emailForm(),
                     prasswordForm(),
                     loginButton(),
                     signinWithGoogle(),
                     // signinWithFacebook(),
                     textRegister(),
+                    TextButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ForgotPassword(),
+                            )),
+                        child: Text('Forgot Password'))
                   ],
                 ),
               ),
@@ -341,7 +432,7 @@ class _AuthenticationState extends State<Authentication> {
     return Container(
       height: 45,
       margin: EdgeInsets.only(top: 15),
-      width: screens*0.7,
+      width: screens * 0.7,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.red,
@@ -444,7 +535,7 @@ class _AuthenticationState extends State<Authentication> {
   }
 
   Widget emailForm() => Container(
-        width: MediaQuery.of(context).size.width*0.85,
+        width: MediaQuery.of(context).size.width * 0.85,
         margin: EdgeInsets.only(top: 10),
         child: TextField(
           keyboardType: TextInputType.emailAddress,

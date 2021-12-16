@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
+import 'package:flutter_application_beng_queue_app/model/user_model.dart';
 import 'package:flutter_application_beng_queue_app/utility/changeData.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 
@@ -56,9 +58,49 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
           ? MyStyle().showProgress()
           : ListView.builder(
               itemCount: queueModels.length,
-              itemBuilder: (context, index) => Text(
-                  ChangeData(time: queueModels[index].time)
-                      .changeTimeToString()),
+              itemBuilder: (context, index) => Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        ChangeData(time: queueModels[index].time)
+                            .changeTimeToString(),
+                      ),
+                      ElevatedButton(
+                          onPressed: () async {
+                            String uidUser = queueModels[index].uidUser;
+                            // print('You click $uidUser');
+
+                            await Firebase.initializeApp().then((value) async {
+                              await FirebaseFirestore.instance
+                                  .collection('userTable')
+                                  .doc(uidUser)
+                                  .get()
+                                  .then((value) async {
+                                UserModel userModel =
+                                    UserModel.fromMap(value.data());
+                                String token = userModel.token;
+                                // print('Token Is ====>>>> $token');
+
+                                var title = 'title form shop';
+                                var body = 'body form shop';
+
+                                var path =
+                                    'https://www.androidthai.in.th/mea/bengapiNotification.php?isAdd=true&token=$token&title=$title&body=$body';
+
+                                await Dio().get(path).then((value) {
+                                  print('Value ===>>> $value');
+                                });
+                              });
+                            });
+                          },
+                          child: Text('SenNoti'))
+                    ],
+                  ),
+                ),
+              ),
             ),
     );
   }

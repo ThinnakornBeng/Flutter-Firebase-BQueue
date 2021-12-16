@@ -5,7 +5,9 @@ import 'package:intl/intl.dart';
 
 class DetailQueueForUser extends StatefulWidget {
   final QueueModel queueModel;
-  const DetailQueueForUser({Key key, @required this.queueModel})
+  final int sumQueue;
+  const DetailQueueForUser(
+      {Key key, @required this.queueModel, @required this.sumQueue})
       : super(key: key);
 
   @override
@@ -14,18 +16,22 @@ class DetailQueueForUser extends StatefulWidget {
 
 class _DetailQueueForUserState extends State<DetailQueueForUser> {
   QueueModel queueModel;
+  int sumQueue;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     this.queueModel = widget.queueModel;
+    this.sumQueue = widget.sumQueue;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Detail List'),),
+      appBar: AppBar(
+        title: Text('Detail List'),
+      ),
       body: Column(
         children: [
           Center(
@@ -139,7 +145,8 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                               Text('วันที่จอง'),
                             ],
                           )),
-                          divider(),divider(),
+                          divider(),
+                          divider(),
                           Container(
                               child: Column(
                             children: [
@@ -155,6 +162,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
               ),
             ),
           ),
+          Text('sumQueue $sumQueue')
         ],
       ),
     );

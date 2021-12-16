@@ -17,8 +17,11 @@ class ListQueueUser extends StatefulWidget {
 
 class _ListQueueUserState extends State<ListQueueUser> {
   var queueModels = <QueueModel>[];
+  var queueModelsSorts = <QueueModel>[];
   var load = true;
   var haveQueue = false; // NoData
+
+  var time = <Timestamp>[];
 
   @override
   void initState() {
@@ -55,15 +58,26 @@ class _ListQueueUserState extends State<ListQueueUser> {
 
                   if (queueModel.uidUser == uidUserLoginen) {
                     if (!queueModel.queueStatus) {
-                      setState(() {
-                        haveQueue = true;
-                        queueModels.add(queueModel);
-                        print('have Queue ===>>> $haveQueue');
-                      });
+                      queueModels.add(queueModel);
+                      time.add(queueModel.time);
+                      print('have Queue ===>>> $haveQueue');
                     }
                   }
                 }
               });
+            }
+
+            time.sort();
+
+            for (var time in time) {
+              for (var model in queueModels) {
+                if (time == model.time) {
+                  setState(() {
+                    haveQueue = true;
+                    queueModelsSorts.add(model);
+                  });
+                }
+              }
             }
           },
         );
@@ -77,69 +91,17 @@ class _ListQueueUserState extends State<ListQueueUser> {
       body: load
           ? MyStyle().showProgress()
           : haveQueue
-              // ? ListView.builder(
-              //     itemCount: queueModels.length,
-              //     itemBuilder: (context, index) => GestureDetector(
-              //       onTap: () {
-              //         print('you click index $index');
-              //         Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //               builder: (context) =>
-              //                   DetailForUser(queueModel: queueModels[index]),
-              //             ));
-              //       },
-              //       child: Card(
-              //         child: Row(
-              //           children: [
-              //             Container(
-              //               width: 80,
-              //               height: 80,
-              //               child: Image.network(
-              //                 queueModels[index].urlImageRest,
-              //                 fit: BoxFit.cover,
-              //               ),
-              //             ),
-              //             Column(
-              //               children: [
-              //                 Row(
-              //                   children: [
-              //                     Container(child: Text('คุณ ${queueModels[index].nameUser}')),
-              //                   ],
-              //                 ),
-              //                 Row(
-              //                   children: [
-              //                     Container(
-              //                       child: Text(
-              //                           'ได้ทำการจองคิวจ้าร้าน ${queueModels[index].nameRest}'),
-              //                     ),
-              //                   ],
-              //                 ),
-              //                 Row(
-              //                   mainAxisAlignment: MainAxisAlignment.start,
-              //                   children: [
-              //                     Container(
-              //                       child: Text(
-              //                           'เมื่อ ${changeTimeToString(queueModels[index].time)}'),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ],
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ),
-              //   )
               ? ListView.builder(
                   itemCount: queueModels.length,
                   itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                DetailQueueForUser(queueModel: queueModels[index]),
+                            builder: (context) => DetailQueueForUser(
+                              queueModel: queueModelsSorts[index],
+                              sumQueue: queueModels.length,
+                            ),
                           ));
                     },
                     child: Container(
@@ -167,7 +129,7 @@ class _ListQueueUserState extends State<ListQueueUser> {
                                                 0.54,
                                         margin: EdgeInsets.only(top: 5),
                                         child: Text(
-                                            'คุณ : ${queueModels[index].nameUser}'),
+                                            'คุณ : ${queueModelsSorts[index].nameUser}'),
                                       ),
                                     ],
                                   ),
@@ -182,7 +144,7 @@ class _ListQueueUserState extends State<ListQueueUser> {
                                             top: 5,
                                           ),
                                           child: Text(
-                                              'คุณได้จองคิวจากร้าน ${queueModels[index].nameRest}')),
+                                              'คุณได้จองคิวจากร้าน ${queueModelsSorts[index].nameRest}')),
                                     ],
                                   ),
                                   Row(
@@ -196,7 +158,7 @@ class _ListQueueUserState extends State<ListQueueUser> {
                                             top: 5,
                                           ),
                                           child: Text(
-                                              'เมื่อ ${changeTimeToString(queueModels[index].time)}')),
+                                              'เมื่อ ${changeTimeToString(queueModelsSorts[index].time)}')),
                                     ],
                                   ),
                                 ],

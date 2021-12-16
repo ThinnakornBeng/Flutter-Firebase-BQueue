@@ -229,7 +229,8 @@ class _AddQueueUserState extends State<AddQueueUser> {
                         Icons.place_rounded,
                         color: Colors.red,
                       ),
-                      Container(width: 155,
+                      Container(
+                        width: 155,
                         child: Text(
                           '  ${restaurantModel.address}',
                           style: TextStyle(
@@ -399,7 +400,6 @@ class _AddQueueUserState extends State<AddQueueUser> {
           (event) async {
             String uidUser = event.uid;
             QueueModel queueModel = QueueModel(
-              date: date,
               time: Timestamp.fromDate(dateTimeNow),
               peopleAmount: peopleAmount,
               nameRest: restaurantModel.nameRes,
@@ -407,7 +407,6 @@ class _AddQueueUserState extends State<AddQueueUser> {
               uidUser: uidUser,
               nameUser: nameLogin,
               queueAmount: queueAmount,
-              tokenUser: token,
               queueStatus: queueStatus,
               urlImageRest: restaurantModel.urlImageRes,
               uidRest: uidRes,
