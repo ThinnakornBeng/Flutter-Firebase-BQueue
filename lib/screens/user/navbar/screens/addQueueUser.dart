@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -21,7 +22,15 @@ class AddQueueUser extends StatefulWidget {
 }
 
 class _AddQueueUserState extends State<AddQueueUser> {
-  String uidRes, typeTable, nameLogin, uidUser, date, time, peopleAmount, token;
+  String uidRes,
+      typeTable,
+      nameLogin,
+      uidUser,
+      date,
+      time,
+      peopleAmount,
+      token,
+      urlImageUser;
 
   bool statusHaveData = true;
   bool statusNoData = true;
@@ -104,6 +113,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
                       event.data(),
                     );
                     nameLogin = userModel.name;
+                    urlImageUser = userModel.imageProfile;
                   },
                 );
               },
@@ -382,6 +392,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
           } else {
             adddQueueAmount();
             // addReceeiveQueue();
+            sentNotification();
             Navigator.pop(context);
           }
         },
@@ -410,6 +421,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
               queueStatus: queueStatus,
               urlImageRest: restaurantModel.urlImageRes,
               uidRest: uidRes,
+              urlImageUser: urlImageUser,
             );
             Map<String, dynamic> data = queueModel.toMap();
             await FirebaseFirestore.instance
@@ -429,6 +441,32 @@ class _AddQueueUserState extends State<AddQueueUser> {
         );
       },
     );
+  }
+
+  Future<void> sentNotification() async {
+    // print('You click $uidUser');
+
+    await Firebase.initializeApp().then((value) async {
+      await FirebaseFirestore.instance
+          .collection('userTable')
+          .doc(uidUser)
+          .get()
+          .then((value) async {
+        UserModel userModel = UserModel.fromMap(value.data());
+        String token = userModel.token;
+        // print('Token Is ====>>>> $token');
+
+        var title = 'คุณ $nameLogin';
+        var body = 'ได้ทำการจองคิวจากร้านของคุณ';
+
+        var path =
+            'https://www.androidthai.in.th/mea/bengapiNotification.php?isAdd=true&token=$token&title=$title&body=$body';
+
+        await Dio().get(path).then((value) {
+          print('Value ===>>> $value');
+        });
+      });
+    });
   }
 
   void adddQueueAmount() {

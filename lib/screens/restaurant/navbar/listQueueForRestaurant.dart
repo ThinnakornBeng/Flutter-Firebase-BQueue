@@ -17,6 +17,7 @@ class ListQueueForRestaurant extends StatefulWidget {
 
 class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
   var queueModels = <QueueModel>[];
+  bool queueStatus = true;
 
   @override
   void initState() {
@@ -70,6 +71,7 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
                       ),
                       ElevatedButton(
                           onPressed: () async {
+                            updateQueueStatus();
                             String uidUser = queueModels[index].uidUser;
                             // print('You click $uidUser');
 
@@ -84,8 +86,10 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
                                 String token = userModel.token;
                                 // print('Token Is ====>>>> $token');
 
-                                var title = 'title form shop';
-                                var body = 'body form shop';
+                                var title =
+                                    'คุณ ${queueModels[index].nameUser} ';
+                                var body =
+                                    'ถึงคิวของคุณแล้วกรุณาไปใช้บริการภายใน 10 นาที';
 
                                 var path =
                                     'https://www.androidthai.in.th/mea/bengapiNotification.php?isAdd=true&token=$token&title=$title&body=$body';
@@ -103,5 +107,12 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
               ),
             ),
     );
+  }
+
+  Future<void> updateQueueStatus() async {
+    FirebaseAuth.instance.authStateChanges().listen((event) async {
+      FirebaseFirestore.instance.collection('restaurantQueueTable')
+        .doc(event.uid).update({"queueStatus": queueStatus}).then((value) {});
+    });
   }
 }

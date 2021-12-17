@@ -103,9 +103,7 @@ class _EditPasswordUserState extends State<EditPasswordUser> {
                   key: formKey,
                   child: Column(
                     children: [
-                      // prasswordForm(),
                       newPrasswordForm(),
-                      // confrimPrasswordForm(),
                     ],
                   ),
                 ),
@@ -124,37 +122,6 @@ class _EditPasswordUserState extends State<EditPasswordUser> {
       },
     );
   }
-
-  Widget prasswordForm() => Container(
-        width: screens * 0.8,
-        margin: EdgeInsets.only(top: 10),
-        child: TextField(
-          onChanged: (value) => pass = value.trim(),
-          obscureText: statusRedEy,
-          decoration: InputDecoration(
-            label: Text(
-              'Please enter your password',
-              style: TextStyle(color: Colors.black54),
-            ),
-            prefixIcon: Icon(
-              Icons.password_rounded,
-              color: Colors.red,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
-            ),
-          ),
-        ),
-      );
 
   Widget newPrasswordForm() => Container(
         width: screens * 0.8,
@@ -201,37 +168,6 @@ class _EditPasswordUserState extends State<EditPasswordUser> {
               ),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.orange),
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
-            ),
-          ),
-        ),
-      );
-
-  Widget confrimPrasswordForm() => Container(
-        width: screens * 0.8,
-        margin: EdgeInsets.only(top: 10),
-        child: TextField(
-          onChanged: (value) => conFirmPassword = value.trim(),
-          obscureText: statusRedEy,
-          decoration: InputDecoration(
-            label: Text(
-              'Confirm password',
-              style: TextStyle(color: Colors.black54),
-            ),
-            prefixIcon: Icon(
-              Icons.password_rounded,
-              color: Colors.red,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.red),
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: Colors.orange),
               borderRadius: BorderRadius.all(
                 Radius.circular(20),

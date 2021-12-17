@@ -13,6 +13,7 @@ class QueueModel {
   final int queueAmount;
   final bool queueStatus;
   final String urlImageRest;
+  final String urlImageUser;
   QueueModel({
     this.nameRest,
     this.time,
@@ -24,6 +25,7 @@ class QueueModel {
     this.queueAmount,
     this.queueStatus,
     this.urlImageRest,
+    this.urlImageUser,
   });
 
   Map<String, dynamic> toMap() {
@@ -38,6 +40,7 @@ class QueueModel {
       'queueAmount': queueAmount,
       'queueStatus': queueStatus,
       'urlImageRest': urlImageRest,
+      'urlImageUser': urlImageUser,
     };
   }
 
@@ -53,6 +56,7 @@ class QueueModel {
       queueAmount: map['queueAmount']?.toInt() ?? 0,
       queueStatus: map['queueStatus'] ?? false,
       urlImageRest: map['urlImageRest'] ?? '',
+      urlImageUser: map['urlImageUser'] ?? '',
     );
   }
 

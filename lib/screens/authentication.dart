@@ -185,24 +185,42 @@ class _AuthenticationState extends State<Authentication> {
                           width: screens * 0.4,
                         )),
                     emailForm(),
-                    prasswordForm(),
+                    prasswordForm(), textButtonForgotPassword(context),
                     loginButton(),
                     signinWithGoogle(),
                     // signinWithFacebook(),
                     textRegister(),
-                    TextButton(
-                        onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ForgotPassword(),
-                            )),
-                        child: Text('Forgot Password'))
                   ],
                 ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget textButtonForgotPassword(BuildContext context) {
+    return Container(
+      width: screens * 0.75,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          TextButton(
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ForgotPassword(),
+                )),
+            child: Text(
+              'Forgot Password !',
+              style: TextStyle(
+                fontStyle: FontStyle.italic,
+                // decoration: TextDecoration.underline,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -431,7 +449,7 @@ class _AuthenticationState extends State<Authentication> {
   Container loginButton() {
     return Container(
       height: 45,
-      margin: EdgeInsets.only(top: 15),
+      // margin: EdgeInsets.only(top: 15),
       width: screens * 0.7,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
