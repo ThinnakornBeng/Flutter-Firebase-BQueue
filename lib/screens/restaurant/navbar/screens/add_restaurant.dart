@@ -27,15 +27,15 @@ class _AddRaetaurantState extends State<AddRaetaurant> {
     super.initState();
     readUidLogin();
     // findLatLng();
-    findToken();
+    // findToken();
   }
 
-  Future<Null> findToken() async {
-    FirebaseMessaging.instance.getToken().then((value) {
-      token = value;
-      print('############Token is $token ###############');
-    });
-  }
+  // Future<Null> findToken() async {
+  //   FirebaseMessaging.instance.getToken().then((value) {
+  //     token = value;
+  //     print('############Token is $token ###############');
+  //   });
+  // }
 
   Future<Null> readUidLogin() async {
     await Firebase.initializeApp().then(
@@ -270,7 +270,6 @@ class _AddRaetaurantState extends State<AddRaetaurant> {
       nameRes: nameRes,
       urlImageRes: urlImage,
       address: address,
-      tokenRest: token,
     );
     Map<String, dynamic> data = restaurantModel.toMap();
     await Firebase.initializeApp().then(

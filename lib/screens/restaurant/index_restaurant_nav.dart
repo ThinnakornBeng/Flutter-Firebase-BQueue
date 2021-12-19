@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/user_model.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/account_restaurant.dart';
+import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/lisiHistoryForRest.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/listQueueForRestaurant.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/notifycationRest.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/store_restaurant.dart';
+import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 
 class RestaurantNVA extends StatefulWidget {
@@ -18,6 +21,7 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
   List<Widget> listWidgets = [
     StoreRestaurant(),
     ListQueueForRestaurant(),
+    ListHistoryForRestaurant(),
     NotifycationRest(),
   ];
   int indexPage = 0;
@@ -27,6 +31,27 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
   void initState() {
     super.initState();
     readUidLogin();
+    forNotification();
+  }
+
+  Future<void> forNotification() async {
+    // for FonEnd Service
+    FirebaseMessaging.onMessage.listen((event) {
+      String titleNoti = event.notification.title;
+      String bodyNoti = event.notification.body;
+      print(
+          'Form Fontend User titleNoti == $titleNoti, bodeyNoti == $bodyNoti');
+      normalDialog(context, '$titleNoti \n $bodyNoti');
+    });
+
+    // for BlackEnd Service
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      String titleNoti = event.notification.title;
+      String bodyNoti = event.notification.body;
+      print(
+          'form BlackEnd User titleNoti == $titleNoti, bodeyNoti == $bodyNoti');
+      normalDialog(context, '$titleNoti \n $bodyNoti');
+    });
   }
 
   Future<Null> readUidLogin() async {
@@ -109,29 +134,15 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
         },
         items: [
           storeRestaurantNav(),
-          homeRestaurantNav(),
+          listQueueRestaurantNav(),
+          listHistoryRestaurantNav(),
           accountRestaurantNav(),
         ],
       );
 
-  BottomNavigationBarItem homeRestaurantNav() {
-    return BottomNavigationBarItem(
-      icon: Icon(
-        Icons.list_alt_rounded,
-        size: 30,
-      ),
-      title: Text(
-        'List Queue',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-      ),
-    );
-  }
-
   BottomNavigationBarItem storeRestaurantNav() {
     return BottomNavigationBarItem(
+      backgroundColor: Colors.red,
       icon: Icon(
         Icons.store_mall_directory_sharp,
         size: 30,
@@ -146,8 +157,43 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
     );
   }
 
+  BottomNavigationBarItem listQueueRestaurantNav() {
+    return BottomNavigationBarItem(
+      backgroundColor: Colors.red,
+      icon: Icon(
+        Icons.list_alt_rounded,
+        size: 30,
+      ),
+      title: Text(
+        'List Queue',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+  BottomNavigationBarItem listHistoryRestaurantNav() {
+    return BottomNavigationBarItem(
+      backgroundColor: Colors.red,
+      icon: Icon(
+        Icons.history_outlined,
+        size: 30,
+      ),
+      title: Text(
+        'List History',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
   BottomNavigationBarItem accountRestaurantNav() {
     return BottomNavigationBarItem(
+      backgroundColor: Colors.red,
       icon: Icon(
         Icons.notifications,
         size: 30,

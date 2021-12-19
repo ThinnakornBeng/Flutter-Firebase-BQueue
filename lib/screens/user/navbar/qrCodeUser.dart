@@ -40,8 +40,8 @@ class _QrCodeUserState extends State<QrCodeUser> {
     screens = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text('Scan QR CODE'),
+        child: Column(
+          children: [Container(margin: EdgeInsets.only(top: 15), child: Text('Scan QR CODE',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),)),
             Container(margin: EdgeInsets.only(top: 10),
               width: screens*0.95,
               height: screens*1.3, color: Colors.grey,
@@ -84,7 +84,7 @@ class _QrCodeUserState extends State<QrCodeUser> {
               //   },
               // ),
             ),
-            // Divider(),
+            Divider(),
             // scanresult == null
             //     ? Text(
             //         'No Data',

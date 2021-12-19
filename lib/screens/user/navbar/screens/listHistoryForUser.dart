@@ -7,7 +7,6 @@ import 'package:flutter_application_beng_queue_app/screens/user/navbar/screens/d
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 import 'package:intl/intl.dart';
 
-import 'detailQueueForUser.dart';
 
 class ListHistoryUser extends StatefulWidget {
   const ListHistoryUser({Key key}) : super(key: key);

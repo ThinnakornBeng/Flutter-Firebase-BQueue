@@ -10,7 +10,6 @@ import 'package:flutter_application_beng_queue_app/screens/user/navbar/notificat
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/qrCodeUser.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/storeUser.dart';
 import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
-import 'package:flutter_application_beng_queue_app/utility/my_notification.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 
 class UserNVA extends StatefulWidget {

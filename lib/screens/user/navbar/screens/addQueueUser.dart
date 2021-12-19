@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_beng_queue_app/model/detail_notification_model.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
 import 'package:flutter_application_beng_queue_app/model/restaurant_model.dart';
 import 'package:flutter_application_beng_queue_app/model/user_model.dart';
@@ -49,6 +50,9 @@ class _AddQueueUserState extends State<AddQueueUser> {
   var dateTimeNow;
   DateFormat dateFormat;
   DateFormat timeFormat;
+
+  var title;
+  var body;
 
   @override
   void initState() {
@@ -177,7 +181,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
               // ),
               // showLogoApp(context),
               showCardRestaurant(context),
-              title(),
+              showTitle(),
               methodTypeUser(),
               methodTypeRestaurant(),
               showTextNumberOfPeople(),
@@ -362,7 +366,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
     );
   }
 
-  Container title() {
+  Container showTitle() {
     return Container(
       margin: EdgeInsets.only(top: 15),
       width: screens * 0.8,
@@ -402,6 +406,23 @@ class _AddQueueUserState extends State<AddQueueUser> {
         ),
       ),
     );
+  }
+
+  Future<Null> addDetailNotification() async {
+    await Firebase.initializeApp().then((value) async {
+      DetailNotificationModel detailNotificationModel =
+          DetailNotificationModel(title: title, body: body);
+      Map<String, dynamic> data = detailNotificationModel.toMap();
+      await FirebaseFirestore.instance
+          .collection('userTable')
+          .doc(uidRes)
+          .collection('detailNotificationTable')
+          .doc()
+          .set(data)
+          .then((value) {
+        print('Add Notification to database success');
+      });
+    });
   }
 
   Future<Null> addReceeiveQueue() async {
@@ -448,16 +469,16 @@ class _AddQueueUserState extends State<AddQueueUser> {
 
     await Firebase.initializeApp().then((value) async {
       await FirebaseFirestore.instance
-          .collection('userTable')
-          .doc(uidUser)
+          .collection('restaurantTable')
+          .doc(uidRes)
           .get()
           .then((value) async {
-        UserModel userModel = UserModel.fromMap(value.data());
-        String token = userModel.token;
+        RestaurantModel restaurantModel = RestaurantModel.fromMap(value.data());
+        String token = restaurantModel.token;
         // print('Token Is ====>>>> $token');
 
-        var title = 'คุณ $nameLogin';
-        var body = 'ได้ทำการจองคิวจากร้านของคุณ';
+        this.title = 'คุณ $nameLogin';
+        this.body = 'ได้ทำการจองคิวจากร้านของคุณ';
 
         var path =
             'https://www.androidthai.in.th/mea/bengapiNotification.php?isAdd=true&token=$token&title=$title&body=$body';
@@ -465,6 +486,8 @@ class _AddQueueUserState extends State<AddQueueUser> {
         await Dio().get(path).then((value) {
           print('Value ===>>> $value');
         });
+
+        addDetailNotification();
       });
     });
   }

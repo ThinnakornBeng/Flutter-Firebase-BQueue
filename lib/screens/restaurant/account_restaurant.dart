@@ -53,7 +53,6 @@ class _AccountRestaurantState extends State<AccountRestaurant> {
                 );
                 nameLogin = userModel.name;
                 imageUsser = userModel.imageProfile;
-                password = userModel.password;
                 email = userModel.email;
               },
             );

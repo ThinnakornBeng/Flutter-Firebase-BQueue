@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_beng_queue_app/model/detail_notification_model.dart';
+import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 
 class NotificationUser extends StatefulWidget {
   const NotificationUser({Key key}) : super(key: key);
@@ -8,12 +13,89 @@ class NotificationUser extends StatefulWidget {
 }
 
 class _NotificationUserState extends State<NotificationUser> {
+  var detailNotificationModels = <DetailNotificationModel>[];
+  var statusLoad = true;
+  var statusHaveData = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    readDetaiNotification();
+  }
+
+  Future<void> readDetaiNotification() async {
+    if (detailNotificationModels.isEmpty) {
+      detailNotificationModels.clear();
+    }
+    await Firebase.initializeApp().then((value) async {
+      await FirebaseAuth.instance.authStateChanges().listen((event) async {
+        await FirebaseFirestore.instance
+            .collection('userTable')
+            .doc(event.uid)
+            .collection('detailNotificationTable')
+            .get()
+            .then((value) {
+          setState(() {
+            statusLoad = false;
+          });
+          for (var item in value.docs) {
+            DetailNotificationModel detailNotificationModel =
+                DetailNotificationModel.fromMap(item.data());
+
+            setState(() {
+              statusHaveData = true;
+              detailNotificationModels.add(detailNotificationModel);
+            });
+            print(
+                'DetailNotification Is $detailNotificationModels #################');
+          }
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Text('Notification For User'),
-      ),
-    );
+        body: statusLoad
+            ? MyStyle().showProgress()
+            : statusHaveData
+                ? ListView.builder(
+                    itemCount: detailNotificationModels.length,
+                    itemBuilder: (context, index) => Container(
+                      child: Card(
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 70,
+                              height: 70,
+                              child: Image.asset('images/logo.png'),
+                            ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(detailNotificationModels[index]
+                                          .title),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                          detailNotificationModels[index].body),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                : Center(child: Text("Don't have detailnotification data")));
   }
 }

@@ -115,7 +115,6 @@ class _RegisterAppState extends State<RegisterApp> {
                   email: email,
                   name: name,
                   userType: typeUser,
-                  password: password,
                   imageProfile: imageProfile);
               Map<String, dynamic> data = model.toMap();
               await FirebaseFirestore.instance

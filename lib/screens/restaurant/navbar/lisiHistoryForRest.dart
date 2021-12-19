@@ -1,22 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
-import 'package:flutter_application_beng_queue_app/model/user_model.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/screens/detailQueueForRest.dart';
 import 'package:flutter_application_beng_queue_app/utility/changeData.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 
-class ListQueueForRestaurant extends StatefulWidget {
-  const ListQueueForRestaurant({Key key}) : super(key: key);
+class ListHistoryForRestaurant extends StatefulWidget {
+  const ListHistoryForRestaurant({Key key}) : super(key: key);
 
   @override
-  _ListQueueForRestaurantState createState() => _ListQueueForRestaurantState();
+  _ListHistoryForRestaurantState createState() =>
+      _ListHistoryForRestaurantState();
 }
 
-class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
+class _ListHistoryForRestaurantState extends State<ListHistoryForRestaurant> {
   var queueModels = <QueueModel>[];
   var uidQueues = <String>[];
   var queueStatus = true;
@@ -60,6 +59,7 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
             .collection('restaurantTable')
             .doc(event.uid)
             .collection('restaurantQueueTable')
+            .orderBy('time', descending: false)
             .get()
             .then((value) {
           setState(() {
@@ -67,7 +67,7 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
           });
           for (var item in value.docs) {
             QueueModel queueModel = QueueModel.fromMap(item.data());
-            if (!queueModel.queueStatus) {
+            if (queueModel.queueStatus) {
               setState(() {
                 queueModels.add(queueModel);
                 statusHaveData = true;
@@ -124,16 +124,5 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
                 )
               : Center(child: Text("Don't have list queue data")),
     );
-  }
-
-  Future<void> updateQueueStatus() async {
-    FirebaseAuth.instance.authStateChanges().listen((event) async {
-      FirebaseFirestore.instance
-          .collection('restaurantTable')
-          .doc(event.uid)
-          .collection('restaurantQueueTable')
-          .doc(event.tenantId)
-          .update({"queueStatus": queueStatus}).then((value) {});
-    });
   }
 }

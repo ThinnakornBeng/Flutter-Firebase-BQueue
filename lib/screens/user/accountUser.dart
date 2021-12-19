@@ -43,7 +43,6 @@ class _AccountUserState extends State<AccountUser> {
           });
           nameLogin = userModel.name;
           imageUsser = userModel.imageProfile;
-          password = userModel.password;
           email = userModel.email;
 
           // print('NameLogin ====>>>> $nameLogin');

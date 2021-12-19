@@ -48,7 +48,6 @@ class _EditPasswordUserState extends State<EditPasswordUser> {
                     );
                   },
                 );
-                password = userModel.password;
               },
             );
           },
@@ -76,7 +75,6 @@ class _EditPasswordUserState extends State<EditPasswordUser> {
                       event.updatePassword(newPassword).then((value) {
                         print('Update Password Success');
                         // upDatePassword();
-                        upDatePassword();
                       });
                     });
                   });
@@ -109,17 +107,6 @@ class _EditPasswordUserState extends State<EditPasswordUser> {
                 ),
               ],
             ),
-    );
-  }
-
-  Future<Null> upDatePassword() async {
-    await Firebase.initializeApp().then(
-      (value) async {
-        FirebaseFirestore.instance
-            .collection('userTable')
-            .doc(uidUser)
-            .update({"password": newPassword}).then((value) {});
-      },
     );
   }
 

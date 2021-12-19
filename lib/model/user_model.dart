@@ -3,25 +3,22 @@ import 'dart:convert';
 class UserModel {
   final String name;
   final String email;
-  final String password;
   final String userType;
   final String imageProfile;
   final String token;
   UserModel({
      this.name,
      this.email,
-     this.password,
      this.userType,
      this.imageProfile,
      this.token,
   });
- 
+  
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'email': email,
-      'password': password,
       'userType': userType,
       'imageProfile': imageProfile,
       'token': token,
@@ -32,7 +29,6 @@ class UserModel {
     return UserModel(
       name: map['name'] ?? '',
       email: map['email'] ?? '',
-      password: map['password'] ?? '',
       userType: map['userType'] ?? '',
       imageProfile: map['imageProfile'] ?? '',
       token: map['token'] ?? '',

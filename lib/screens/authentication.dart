@@ -131,6 +131,7 @@ class _AuthenticationState extends State<Authentication> {
                   switch (model.userType) {
                     case 'restaurant':
                       routeToPage(RestaurantNVA());
+                      upDateTokenRestaurant();
                       break;
                     case 'user':
                       routeToPage(UserNVA());
@@ -154,6 +155,22 @@ class _AuthenticationState extends State<Authentication> {
         );
       },
     );
+  }
+
+  Future<void> upDateTokenRestaurant() async {
+    Firebase.initializeApp().then((value) async {
+      FirebaseAuth.instance.authStateChanges().listen((event) {
+        String uidRest = event.uid;
+
+        Map<String, dynamic> map = {};
+        map['token'] = token;
+        FirebaseFirestore.instance
+            .collection('restaurantTable')
+            .doc(uidRest)
+            .update(map)
+            .then((value) => print('UpDate Token Restaurant Success'));
+      });
+    });
   }
 
   void routeToPage(Widget widget) {
