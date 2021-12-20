@@ -14,18 +14,20 @@ class QueueModel {
   final bool queueStatus;
   final String urlImageRest;
   final String urlImageUser;
+  final String address;
   QueueModel({
-    this.nameRest,
-    this.time,
-    this.peopleAmount,
-    this.tableType,
-    this.nameUser,
-    this.uidUser,
-    this.uidRest,
-    this.queueAmount,
-    this.queueStatus,
-    this.urlImageRest,
-    this.urlImageUser,
+     this.nameRest,
+     this.time,
+     this.peopleAmount,
+     this.tableType,
+     this.nameUser,
+     this.uidUser,
+     this.uidRest,
+     this.queueAmount,
+     this.queueStatus,
+     this.urlImageRest,
+     this.urlImageUser,
+     this.address,
   });
 
   Map<String, dynamic> toMap() {
@@ -41,6 +43,7 @@ class QueueModel {
       'queueStatus': queueStatus,
       'urlImageRest': urlImageRest,
       'urlImageUser': urlImageUser,
+      'address': address,
     };
   }
 
@@ -57,11 +60,11 @@ class QueueModel {
       queueStatus: map['queueStatus'] ?? false,
       urlImageRest: map['urlImageRest'] ?? '',
       urlImageUser: map['urlImageUser'] ?? '',
+      address: map['address'] ?? '',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory QueueModel.fromJson(String source) =>
-      QueueModel.fromMap(json.decode(source));
+  factory QueueModel.fromJson(String source) => QueueModel.fromMap(json.decode(source));
 }

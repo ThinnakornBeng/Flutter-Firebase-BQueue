@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/screens/detailQueueForUser.dart';
-import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 import 'package:intl/intl.dart';
 

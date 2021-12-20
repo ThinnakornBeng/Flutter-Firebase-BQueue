@@ -44,7 +44,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                 child: Column(
                   children: [
                     Container(
-                      // color: Colors.yellow,
+                      // color: Colors.green,
                       height: 100,
                       padding: EdgeInsets.all(10),
                       child: Row(
@@ -64,15 +64,16 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                             ),
                           ),
                           Container(
+                            // color: Colors.yellow,
                             margin: EdgeInsets.only(left: 10, top: 10),
-                            width: MediaQuery.of(context).size.width * 0.50,
+                            width: MediaQuery.of(context).size.width * 0.43,
                             child: Column(
                               children: [
                                 Row(
                                   children: [
                                     Container(
                                       width: MediaQuery.of(context).size.width *
-                                          0.48,
+                                          0.41,
                                       margin: EdgeInsets.only(top: 5),
                                       child:
                                           Text('ร้าน ${queueModel.nameRest}'),
@@ -84,7 +85,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                                     Container(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.48,
+                                                0.41,
                                         margin: EdgeInsets.only(
                                           top: 5,
                                         ),
@@ -103,6 +104,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                               child: Column(
                                 children: [
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         'กำลังรอคิว',
@@ -128,7 +130,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                           Text(
                             'คิวที่ ${queueModel.queueAmount}',
                             style: TextStyle(fontSize: 30),
-                          )
+                          ),
                         ],
                       ),
                     ),

@@ -395,7 +395,6 @@ class _AddQueueUserState extends State<AddQueueUser> {
                 context, 'Please you choose tabel type and number of people');
           } else {
             adddQueueAmount();
-            // addReceeiveQueue();
             sentNotification();
             Navigator.pop(context);
           }
@@ -443,6 +442,7 @@ class _AddQueueUserState extends State<AddQueueUser> {
               urlImageRest: restaurantModel.urlImageRes,
               uidRest: uidRes,
               urlImageUser: urlImageUser,
+              address: restaurantModel.address,
             );
             Map<String, dynamic> data = queueModel.toMap();
             await FirebaseFirestore.instance

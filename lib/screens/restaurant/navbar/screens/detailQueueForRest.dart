@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_beng_queue_app/model/detail_notification_model.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
 import 'package:flutter_application_beng_queue_app/model/user_model.dart';
 
@@ -21,6 +21,8 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
   QueueModel queueModel;
   var uidQueue;
   var queueStatus = true;
+  var body;
+  var title;
 
   @override
   void initState() {
@@ -28,30 +30,8 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
     super.initState();
     queueModel = widget.queueModel;
     uidQueue = widget.uidQueue;
-    readUidQueue();
-    print('UidQueue ==>> $uidQueue');
-  }
 
-  Future<void> readUidQueue() async {
-    await Firebase.initializeApp().then((value) async {
-      await FirebaseAuth.instance.authStateChanges().listen((event) async {
-        String uidRes = event.uid;
-        await FirebaseFirestore.instance
-            .collection('restaurantTable')
-            .doc(uidRes)
-            .get()
-            .then((value) async {
-          String queueUid = value.id;
-          await FirebaseAuth.instance.authStateChanges().listen((event) async {
-            await FirebaseFirestore.instance
-                .collection('restaurantQueueTable')
-                .doc(event.uid)
-                .get()
-                .then((value) {});
-          });
-        });
-      });
-    });
+    print('UidQueue ==>> $uidQueue');
   }
 
   @override
@@ -74,8 +54,8 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
                     String token = userModel.token;
                     // print('Token Is ====>>>> $token');
 
-                    var title = 'คุณ ${queueModel.nameUser} ';
-                    var body = 'ถึงคิวของคุณแล้วกรุณาไปใช้บริการภายใน 10 นาที';
+                    this.title = 'คุณ ${queueModel.nameUser} ';
+                    this.body = 'ถึงคิวของคุณแล้วกรุณาไปใช้บริการภายใน 10 นาที';
 
                     var path =
                         'https://www.androidthai.in.th/mea/bengapiNotification.php?isAdd=true&token=$token&title=$title&body=$body';
@@ -83,11 +63,29 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
                     await Dio().get(path).then((value) {
                       print('Value ===>>> $value');
                     });
+                    addDetailNotification();
                   });
                 });
               },
               child: Text('SenNoti'))),
     );
+  }
+
+  Future<Null> addDetailNotification() async {
+    await Firebase.initializeApp().then((value) async {
+      DetailNotificationModel detailNotificationModel =
+          DetailNotificationModel(title: title, body: body);
+      Map<String, dynamic> data = detailNotificationModel.toMap();
+      await FirebaseFirestore.instance
+          .collection('userTable')
+          .doc(queueModel.uidUser)
+          .collection('detailNotificationTable')
+          .doc()
+          .set(data)
+          .then((value) {
+        print('Add Notification to database success');
+      });
+    });
   }
 
   Future<void> updateQueueStatus() async {
@@ -97,7 +95,9 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
           .doc(queueModel.uidRest)
           .collection('restaurantQueueTable')
           .doc(uidQueue)
-          .update({"queueStatus": queueStatus}).then((value) {});
+          .update({"queueStatus": queueStatus}).then((value) {
+        print('Uddate Queue Status Success');
+      });
     });
   }
 }

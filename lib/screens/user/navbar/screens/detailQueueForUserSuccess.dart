@@ -59,14 +59,14 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                           ),
                           Container(
                             margin: EdgeInsets.only(left: 10, top: 10),
-                            width: MediaQuery.of(context).size.width * 0.50,
+                            width: MediaQuery.of(context).size.width * 0.43,
                             child: Column(
                               children: [
                                 Row(
                                   children: [
                                     Container(
                                       width: MediaQuery.of(context).size.width *
-                                          0.48,
+                                          0.41,
                                       margin: EdgeInsets.only(top: 5),
                                       child:
                                           Text('ร้าน ${queueModel.nameRest}'),
@@ -78,7 +78,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                                     Container(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.48,
+                                                0.41,
                                         margin: EdgeInsets.only(
                                           top: 5,
                                         ),
