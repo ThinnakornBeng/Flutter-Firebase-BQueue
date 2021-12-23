@@ -171,7 +171,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
     String dateStr = dateFormat.format(time.toDate());
     return dateStr;
   }
-
+ 
   Divider divider() {
     return Divider(
       height: 15,
