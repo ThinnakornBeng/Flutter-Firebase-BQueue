@@ -5,7 +5,6 @@ import 'package:flutter_application_beng_queue_app/model/restaurant_model.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/screens/addQueueUser.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 
-
 class StoreUser extends StatefulWidget {
   @override
   _StoreUserState createState() => _StoreUserState();
@@ -17,21 +16,36 @@ class _StoreUserState extends State<StoreUser> {
   List<String> uidRests = [];
   String urlImage;
   double sceens;
+  TextEditingController searchController = TextEditingController();
+
+  List allResurt = [];
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     readData();
+    searchController.addListener(() {
+      onSearchChanged();
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  onSearchChanged() {
+    print(searchController.text);
   }
 
   Future<Null> readData() async {
     await Firebase.initializeApp().then(
       (value) async {
-        await FirebaseFirestore.instance
+        var data = await FirebaseFirestore.instance
             .collection('restaurantTable')
-            .snapshots()
-            .listen(
+            .get()
+            .then(
           (event) {
             int index = 0;
             for (var item in event.docs) {
@@ -52,6 +66,9 @@ class _StoreUserState extends State<StoreUser> {
             }
           },
         );
+        setState(() {
+          allResurt = widgets;
+        });
       },
     );
   }
@@ -64,9 +81,19 @@ class _StoreUserState extends State<StoreUser> {
           ? MyStyle().showProgress()
           : Container(
               margin: EdgeInsets.only(left: 15, top: 10, right: 15),
-              child: GridView.extent(
-                maxCrossAxisExtent: sceens*0.5,
-                children: widgets,
+              child: Column(
+                children: [
+                  TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
+                  ),
+                  Expanded(
+                    child: GridView.extent(
+                      maxCrossAxisExtent: sceens * 0.5,
+                      children: widgets,
+                    ),
+                  ),
+                ],
               ),
             ), //   ),
     );
@@ -126,6 +153,6 @@ class _StoreUserState extends State<StoreUser> {
               height: sceens * 0.30,
             ),
           ),
-        ), 
+        ),
       );
 }

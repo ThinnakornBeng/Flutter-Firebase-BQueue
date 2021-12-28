@@ -73,19 +73,31 @@ class _NotificationUserState extends State<NotificationUser> {
                               child: Image.asset('images/logo.png'),
                             ),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.8,
+                              width: MediaQuery.of(context).size.width * 0.78,
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      Text(detailNotificationModels[index]
-                                          .title),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.78,
+                                        child: Text(
+                                            detailNotificationModels[index]
+                                                .title),
+                                      ),
                                     ],
                                   ),
                                   Row(
                                     children: [
-                                      Text(
-                                          detailNotificationModels[index].body),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.78,
+                                        child: Text(
+                                            detailNotificationModels[index]
+                                                .body),
+                                      ),
                                     ],
                                   ),
                                 ],

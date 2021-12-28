@@ -44,7 +44,7 @@ class _QrCodeUserState extends State<QrCodeUser> {
           children: [Container(margin: EdgeInsets.only(top: 15), child: Text('Scan QR CODE',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),)),
             Container(margin: EdgeInsets.only(top: 10),
               width: screens*0.95,
-              height: screens*1.3, color: Colors.grey,
+              height: screens*1.2, color: Colors.grey,
               // child: QRView(
               //   key: qrKey,
               //   onQRViewCreated: (QRViewController qrViewController) async {

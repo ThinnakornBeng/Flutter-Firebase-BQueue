@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/user_model.dart';
-import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
 
 class EditPasswordUser extends StatefulWidget {
@@ -92,7 +91,7 @@ class _EditPasswordUserState extends State<EditPasswordUser> {
           ),
         ),
       ),
-      body: password == null
+      body: userModel== null
           ? MyStyle().showProgress()
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,

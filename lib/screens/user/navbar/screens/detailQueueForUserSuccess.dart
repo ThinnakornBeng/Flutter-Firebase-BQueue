@@ -38,7 +38,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                 child: Column(
                   children: [
                     Container(
-                      // color: Colors.yellow,
+                      // color: Colors.green,
                       height: 100,
                       padding: EdgeInsets.all(10),
                       child: Row(
@@ -58,6 +58,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                             ),
                           ),
                           Container(
+                            // color: Colors.yellow,
                             margin: EdgeInsets.only(left: 10, top: 10),
                             width: MediaQuery.of(context).size.width * 0.43,
                             child: Column(
@@ -83,7 +84,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                                           top: 5,
                                         ),
                                         child: Text(
-                                            'ที่อยู่ ......................')),
+                                            'ที่อยู่ ${queueModel.address}')),
                                   ],
                                 ),
                               ],
@@ -97,6 +98,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                               child: Column(
                                 children: [
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
                                         'สำเร็จ',
@@ -118,11 +120,46 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                           Image.asset('images/clock.png'),
                           divider(),
                           divider(),
-                          divider(),
-                          Text(
-                            'คิวที่ ${queueModel.queueAmount}',
-                            style: TextStyle(fontSize: 30),
-                          )
+                          Container(
+                            // color: Colors.yellow,
+                            margin: EdgeInsets.only(left: 10, top: 10),
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.table_chart,
+                                      color: Colors.red,
+                                      size: 30,
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.20,
+                                      margin: EdgeInsets.only(top: 5, left: 10),
+                                      child: Text(queueModel.tableType),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.person,
+                                      size: 30,
+                                      color: Colors.red,
+                                    ),
+                                    Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.20,
+                                        margin:
+                                            EdgeInsets.only(top: 5, left: 10),
+                                        child: Text(queueModel.peopleAmount)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -136,15 +173,18 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                               child: Column(
                             children: [
                               Text(changeDateToString(queueModel.time)),
-                              Text('วันที่จอง'),
+                              Text('Date'),
+                              Icon(Icons.date_range_rounded,color: Colors.red,size: 30,)
                             ],
                           )),
-                          divider(),divider(),
+                          divider(),
+                          divider(),
                           Container(
                               child: Column(
                             children: [
                               Text(changeTimeToString(queueModel.time)),
-                              Text('เวลาที่จอง'),
+                              Text('Time'),
+                              Icon(Icons.access_time_filled_rounded,color: Colors.red,size: 30,)
                             ],
                           )),
                         ],
@@ -155,6 +195,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
               ),
             ),
           ),
+          // Text('sumQueue $sumQueue')
         ],
       ),
     );

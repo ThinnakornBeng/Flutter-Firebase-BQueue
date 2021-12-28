@@ -104,7 +104,7 @@ class _ListQueueUserState extends State<ListQueueUser> {
                           ));
                     },
                     child: Container(
-                      height: 120,
+                      height: 80,
                       margin: EdgeInsets.only(right: 10, left: 10),
                       child: Card(
                         shadowColor: Colors.red,
@@ -112,26 +112,28 @@ class _ListQueueUserState extends State<ListQueueUser> {
                           children: [
                             Container(
                               width: 120,
-                              child: Image.network(
-                                  queueModels[index].urlImageRest),
+                              child: ClipOval(
+                                child: Image.network(
+                                    queueModels[index].urlImageRest),
+                              ),
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 10),
                               width: MediaQuery.of(context).size.width * 0.56,
                               child: Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.54,
-                                        margin: EdgeInsets.only(top: 5),
-                                        child: Text(
-                                            'คุณ : ${queueModelsSorts[index].nameUser}'),
-                                      ),
-                                    ],
-                                  ),
+                                  // Row(
+                                  //   children: [
+                                  //     Container(
+                                  //       width:
+                                  //           MediaQuery.of(context).size.width *
+                                  //               0.54,
+                                  //       margin: EdgeInsets.only(top: 5),
+                                  //       child: Text(
+                                  //           'คุณ : ${queueModelsSorts[index].nameUser}'),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                   Row(
                                     children: [
                                       Container(

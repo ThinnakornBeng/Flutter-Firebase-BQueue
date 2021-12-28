@@ -90,7 +90,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                                           top: 5,
                                         ),
                                         child: Text(
-                                            'ที่อยู่ ......................')),
+                                            'ที่อยู่ ${queueModel.address}')),
                                   ],
                                 ),
                               ],
@@ -126,10 +126,45 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                           Image.asset('images/clock.png'),
                           divider(),
                           divider(),
-                          divider(),
-                          Text(
-                            'คิวที่ ${queueModel.queueAmount}',
-                            style: TextStyle(fontSize: 30),
+                          Container(
+                            // color: Colors.yellow,
+                            margin: EdgeInsets.only(left: 10, top: 10),
+                            width: MediaQuery.of(context).size.width * 0.35,
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.table_chart,
+                                      color: Colors.red,
+                                      size: 30,
+                                    ),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.20,
+                                      margin: EdgeInsets.only(top: 5, left: 10),
+                                      child: Text(queueModel.tableType),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.person,
+                                      size: 30,
+                                      color: Colors.red,
+                                    ),
+                                    Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.20,
+                                        margin:
+                                            EdgeInsets.only(top: 5, left: 10),
+                                        child: Text(queueModel.peopleAmount)),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
@@ -150,12 +185,13 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                           divider(),
                           divider(),
                           Container(
-                              child: Column(
-                            children: [
-                              Text(changeTimeToString(queueModel.time)),
-                              Text('เวลาที่จอง'),
-                            ],
-                          )),
+                            child: Column(
+                              children: [
+                                Text(changeTimeToString(queueModel.time)),
+                                Text('เวลาที่จอง'),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -164,7 +200,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
               ),
             ),
           ),
-          Text('sumQueue $sumQueue')
+          // Text('sumQueue $sumQueue')
         ],
       ),
     );

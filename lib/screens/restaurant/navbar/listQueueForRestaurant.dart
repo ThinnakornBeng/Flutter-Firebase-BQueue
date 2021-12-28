@@ -60,6 +60,7 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
             .collection('restaurantTable')
             .doc(event.uid)
             .collection('restaurantQueueTable')
+            .orderBy('time', descending: false)
             .get()
             .then((value) {
           setState(() {

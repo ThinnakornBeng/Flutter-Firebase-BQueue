@@ -180,17 +180,12 @@ class _AccountUserState extends State<AccountUser> {
       margin: EdgeInsets.only(left: 10, right: 20),
       child: ListTile(
         onTap: () {
-          if (password == null) {
-            normalDialog(
-                context, "Can't change password due to login via google.");
-          } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => EditPasswordUser(),
-              ),
-            );
-          }
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => EditPasswordUser(),
+            ),
+          );
         },
         leading: Icon(
           Icons.password_outlined,
