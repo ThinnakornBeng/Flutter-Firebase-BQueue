@@ -4,15 +4,16 @@ import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
 import 'package:intl/intl.dart';
 
 class DetailQueueForUserSuccess extends StatefulWidget {
-   final QueueModel queueModel;
-  const DetailQueueForUserSuccess({ Key key,@required this.queueModel }) : super(key: key);
+  final QueueModel queueModel;
+  const DetailQueueForUserSuccess({Key key, @required this.queueModel})
+      : super(key: key);
 
   @override
-  _DetailQueueForUserSuccessState createState() => _DetailQueueForUserSuccessState();
+  _DetailQueueForUserSuccessState createState() =>
+      _DetailQueueForUserSuccessState();
 }
 
 class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
-
   QueueModel queueModel;
 
   @override
@@ -25,7 +26,9 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Detail List'),),
+      appBar: AppBar(
+        title: Text('Detail List'),
+      ),
       body: Column(
         children: [
           Center(
@@ -102,7 +105,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                                     children: [
                                       Text(
                                         'สำเร็จ',
-                                        style: TextStyle(color: Colors.red),
+                                        style: TextStyle(color: Colors.green),
                                       ),
                                     ],
                                   )
@@ -170,23 +173,33 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                              child: Column(
-                            children: [
-                              Text(changeDateToString(queueModel.time)),
-                              Text('Date'),
-                              Icon(Icons.date_range_rounded,color: Colors.red,size: 30,)
-                            ],
-                          )),
+                            child: Column(
+                              children: [
+                                Text(changeDateToString(queueModel.time)),
+                                Text('Date'),
+                                Icon(
+                                  Icons.date_range_rounded,
+                                  color: Colors.red,
+                                  size: 30,
+                                )
+                              ],
+                            ),
+                          ),
                           divider(),
                           divider(),
                           Container(
-                              child: Column(
-                            children: [
-                              Text(changeTimeToString(queueModel.time)),
-                              Text('Time'),
-                              Icon(Icons.access_time_filled_rounded,color: Colors.red,size: 30,)
-                            ],
-                          )),
+                            child: Column(
+                              children: [
+                                Text(changeTimeToString(queueModel.time)),
+                                Text('Time'),
+                                Icon(
+                                  Icons.access_time_filled_rounded,
+                                  color: Colors.red,
+                                  size: 30,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -201,7 +214,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
     );
   }
 
-   String changeTimeToString(Timestamp time) {
+  String changeTimeToString(Timestamp time) {
     DateFormat timeFormat = new DateFormat.Hms();
     String timeStr = timeFormat.format(time.toDate());
     return timeStr;
@@ -212,7 +225,7 @@ class _DetailQueueForUserSuccessState extends State<DetailQueueForUserSuccess> {
     String dateStr = dateFormat.format(time.toDate());
     return dateStr;
   }
- 
+
   Divider divider() {
     return Divider(
       height: 15,

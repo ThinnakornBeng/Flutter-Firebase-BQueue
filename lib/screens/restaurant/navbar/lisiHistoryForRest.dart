@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
+import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/detailForRestaurantSuccess.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/screens/detailQueueForRest.dart';
 import 'package:flutter_application_beng_queue_app/utility/changeData.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
+import 'package:intl/intl.dart';
 
 class ListHistoryForRestaurant extends StatefulWidget {
   const ListHistoryForRestaurant({Key key}) : super(key: key);
@@ -92,11 +94,10 @@ class _ListHistoryForRestaurantState extends State<ListHistoryForRestaurant> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => DetailQueueForRrst(
-                              queueModel: queueModels[index],
-                              uidQueue: uidQueues[index],
-                            ),
-                          ));
+                              builder: (context) => DetailForRestaurantSuccess(
+                                    queueModel: queueModels[index],
+                                    uidQueue: uidQueues[index],
+                                  )));
                     },
                     child: Card(
                       child: Padding(
@@ -105,17 +106,25 @@ class _ListHistoryForRestaurantState extends State<ListHistoryForRestaurant> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                                width: 60,
-                                height: 60,
-                                child: ClipOval(
-                                    child: Image.network(
+                              width: 60,
+                              height: 60,
+                              child: ClipOval(
+                                child: Image.network(
                                   queueModels[index].urlImageUser,
                                   fit: BoxFit.cover,
-                                ))),
-                            Text(
-                              ChangeData(time: queueModels[index].time)
-                                  .changeTimeToString(),
+                                ),
+                              ),
                             ),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: Text(
+                                "คุณ ${queueModels[index].nameUser} ได้ทำการจองคิวจากร้านของคุณเมื่่อวันที่ ${changeDateToString(queueModels[index].time)} เวลา ${changeTimeToString(queueModels[index].time)}",
+                              ),
+                            ),
+                            // Text(
+                            //   ChangeData(time: queueModels[index].time)
+                            //       .changeTimeToString(),
+                            // ),
                           ],
                         ),
                       ),
@@ -124,5 +133,17 @@ class _ListHistoryForRestaurantState extends State<ListHistoryForRestaurant> {
                 )
               : Center(child: Text("Don't have list queue data")),
     );
+  }
+
+  String changeTimeToString(Timestamp time) {
+    DateFormat timeFormat = new DateFormat.Hms();
+    String timeStr = timeFormat.format(time.toDate());
+    return timeStr;
+  }
+
+  String changeDateToString(Timestamp time) {
+    DateFormat dateFormat = new DateFormat.yMd();
+    String dateStr = dateFormat.format(time.toDate());
+    return dateStr;
   }
 }

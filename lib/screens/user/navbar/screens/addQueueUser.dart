@@ -437,7 +437,6 @@ class _AddQueueUserState extends State<AddQueueUser> {
               tableType: typeTable,
               uidUser: uidUser,
               nameUser: nameLogin,
-              queueAmount: queueAmount,
               queueStatus: queueStatus,
               urlImageRest: restaurantModel.urlImageRes,
               uidRest: uidRes,

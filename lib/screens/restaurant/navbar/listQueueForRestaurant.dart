@@ -8,6 +8,7 @@ import 'package:flutter_application_beng_queue_app/model/user_model.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/screens/detailQueueForRest.dart';
 import 'package:flutter_application_beng_queue_app/utility/changeData.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
+import 'package:intl/intl.dart';
 
 class ListQueueForRestaurant extends StatefulWidget {
   const ListQueueForRestaurant({Key key}) : super(key: key);
@@ -103,20 +104,28 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                                width: 60,
-                                height: 60,
-                                child: ClipOval(
-                                    child: Image.network(
+                              width: 60,
+                              height: 60,
+                              child: ClipOval(
+                                child: Image.network(
                                   queueModels[index].urlImageUser,
                                   fit: BoxFit.cover,
-                                ))),
-                            Text(
-                              ChangeData(time: queueModels[index].time)
-                                  .changeTimeToString(),
+                                ),
+                              ),
                             ),
+                            Container(margin: EdgeInsets.only(left: 10),
+                              width: MediaQuery.of(context).size.width * 0.7,
+                              child: Text(
+                                "คุณ ${queueModels[index].nameUser} ได้ทำการจองคิวจากร้านของคุณแมื่อวันที่  ${changeDateToString(queueModels[index].time)} เวลา ${changeTimeToString(queueModels[index].time)}",
+                              ),
+                            ),
+                            // Text(
+                            //   ChangeData(time: queueModels[index].time)
+                            //       .changeTimeToString(),
+                            // ),
                           ],
                         ),
                       ),
@@ -125,6 +134,18 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
                 )
               : Center(child: Text("Don't have list queue data")),
     );
+  }
+
+  String changeTimeToString(Timestamp time) {
+    DateFormat timeFormat = new DateFormat.Hms();
+    String timeStr = timeFormat.format(time.toDate());
+    return timeStr;
+  }
+
+  String changeDateToString(Timestamp time) {
+    DateFormat dateFormat = new DateFormat.yMd();
+    String dateStr = dateFormat.format(time.toDate());
+    return dateStr;
   }
 
   Future<void> updateQueueStatus() async {

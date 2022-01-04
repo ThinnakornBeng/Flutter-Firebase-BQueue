@@ -1,29 +1,24 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dio/dio.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_beng_queue_app/model/detail_notification_model.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
-import 'package:flutter_application_beng_queue_app/model/user_model.dart';
 import 'package:intl/intl.dart';
 
-class DetailQueueForRrst extends StatefulWidget {
+class DetailForRestaurantSuccess extends StatefulWidget {
   final QueueModel queueModel;
   final String uidQueue;
-  const DetailQueueForRrst(
+  const DetailForRestaurantSuccess(
       {Key key, @required this.queueModel, @required this.uidQueue})
       : super(key: key);
 
   @override
-  _DetailQueueForRrstState createState() => _DetailQueueForRrstState();
+  _DetailForRestaurantSuccessState createState() =>
+      _DetailForRestaurantSuccessState();
 }
 
-class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
+class _DetailForRestaurantSuccessState
+    extends State<DetailForRestaurantSuccess> {
   QueueModel queueModel;
-  var uidQueue;
-  var queueStatus = true;
-  var body;
-  var title;
+  String uidQueue;
 
   @override
   void initState() {
@@ -31,19 +26,20 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
     super.initState();
     queueModel = widget.queueModel;
     uidQueue = widget.uidQueue;
-
-    print('UidQueue ==>> $uidQueue');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Detail For restaurant'),),
+      appBar: AppBar(
+        title: Text('Detail For Rest Success'),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            Card(color: Colors.redAccent[500],
+            Card(
+              color: Colors.redAccent[500],
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -68,7 +64,9 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
                             children: [
                               Row(
                                 children: [
-                                  Container(width: MediaQuery.of(context).size.width*0.45,
+                                  Container(
+                                    width: MediaQuery.of(context).size.width *
+                                        0.45,
                                     child: Text('คุณ ${queueModel.nameUser}'),
                                   ),
                                 ],
@@ -84,8 +82,8 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'กำลังรอคิว',
-                                style: TextStyle(color: Colors.red),
+                                'สำเร็จ',
+                                style: TextStyle(color: Colors.green),
                               )
                             ],
                           ),
@@ -145,40 +143,6 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
                       ],
                     ),
                   ),
-                  divider(),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () async {
-                        updateQueueStatus();
-                        String uidUser = queueModel.uidUser;
-                        // print('You click $uidUser');
-                        await Firebase.initializeApp().then((value) async {
-                          await FirebaseFirestore.instance
-                              .collection('userTable')
-                              .doc(uidUser)
-                              .get()
-                              .then((value) async {
-                            UserModel userModel = UserModel.fromMap(value.data());
-                            String token = userModel.token;
-                            // print('Token Is ====>>>> $token');
-
-                            this.title = 'คุณ ${queueModel.nameUser} ';
-                            this.body =
-                                'ถึงคิวของคุณแล้วกรุณาไปใช้บริการภายใน 10 นาที';
-
-                            var path =
-                                'https://www.androidthai.in.th/mea/bengapiNotification.php?isAdd=true&token=$token&title=$title&body=$body';
-
-                            await Dio().get(path).then((value) {
-                              print('Value ===>>> $value');
-                            });
-                            addDetailNotification();
-                          });
-                        });
-                      },
-                      child: Text('SenNoti'),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -186,36 +150,6 @@ class _DetailQueueForRrstState extends State<DetailQueueForRrst> {
         ),
       ),
     );
-  }
-
-  Future<Null> addDetailNotification() async {
-    await Firebase.initializeApp().then((value) async {
-      DetailNotificationModel detailNotificationModel =
-          DetailNotificationModel(title: title, body: body);
-      Map<String, dynamic> data = detailNotificationModel.toMap();
-      await FirebaseFirestore.instance
-          .collection('userTable')
-          .doc(queueModel.uidUser)
-          .collection('detailNotificationTable')
-          .doc()
-          .set(data)
-          .then((value) {
-        print('Add Notification to database success');
-      });
-    });
-  }
-
-  Future<void> updateQueueStatus() async {
-    Firebase.initializeApp().then((value) async {
-      FirebaseFirestore.instance
-          .collection('restaurantTable')
-          .doc(queueModel.uidRest)
-          .collection('restaurantQueueTable')
-          .doc(uidQueue)
-          .update({"queueStatus": queueStatus}).then((value) {
-        print('Uddate Queue Status Success');
-      });
-    });
   }
 
   String changeTimeToString(Timestamp time) {

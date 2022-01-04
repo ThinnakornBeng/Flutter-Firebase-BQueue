@@ -38,6 +38,7 @@ class _StoreUserState extends State<StoreUser> {
   onSearchChanged() {
     print(searchController.text);
   }
+  
 
   Future<Null> readData() async {
     await Firebase.initializeApp().then(
@@ -66,9 +67,7 @@ class _StoreUserState extends State<StoreUser> {
             }
           },
         );
-        setState(() {
-          allResurt = widgets;
-        });
+
       },
     );
   }
