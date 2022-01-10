@@ -111,6 +111,19 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                                         style: TextStyle(color: Colors.red),
                                       ),
                                     ],
+                                  ),
+                                  Container(margin: EdgeInsets.only(right: 15),
+                                    height: 30,
+                                    width: 30,
+                                    // color: Colors.red,
+                                    child: Center(
+                                      child: IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.message,
+                                            color: Colors.blue,
+                                          )),
+                                    ),
                                   )
                                 ],
                               ))

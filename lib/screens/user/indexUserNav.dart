@@ -8,6 +8,7 @@ import 'package:flutter_application_beng_queue_app/screens/user/accountUser.dart
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/historyUser.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/notificationUser.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/qrCodeUser.dart';
+import 'package:flutter_application_beng_queue_app/screens/user/navbar/search.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/storeUser.dart';
 import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
@@ -20,6 +21,7 @@ class UserNVA extends StatefulWidget {
 class _UserNVAState extends State<UserNVA> {
   List<Widget> listWidgets = [
     StoreUser(),
+    Search(),
     QrCodeUser(),
     HistoryUser(),
     NotificationUser(),
@@ -146,6 +148,7 @@ class _UserNVAState extends State<UserNVA> {
         },
         items: [
           storeUserNav(),
+          searchUserNav(),
           qrCodeUserNav(),
           historyUserNav(),
           notificationUserNav(),
@@ -161,6 +164,20 @@ class _UserNVAState extends State<UserNVA> {
       ),
       title: Text(
         'Store',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+    );
+  }
+
+  BottomNavigationBarItem searchUserNav() {
+    return BottomNavigationBarItem(
+      backgroundColor: Colors.red,
+      icon: Icon(
+        Icons.search,
+        size: 30,
+      ),
+      title: Text(
+        'Search',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );

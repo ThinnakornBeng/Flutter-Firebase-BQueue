@@ -38,7 +38,6 @@ class _StoreUserState extends State<StoreUser> {
   onSearchChanged() {
     print(searchController.text);
   }
-  
 
   Future<Null> readData() async {
     await Firebase.initializeApp().then(
@@ -67,7 +66,6 @@ class _StoreUserState extends State<StoreUser> {
             }
           },
         );
-
       },
     );
   }
@@ -83,38 +81,45 @@ class _StoreUserState extends State<StoreUser> {
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Container(width: MediaQuery.of(context).size.width*0.85,
-                      child: TextField(
-                        controller: searchController,
-                        decoration: InputDecoration(
-                            suffixIcon: Container(
-                              margin: EdgeInsets.only(right: 30),
-                              child: Icon(
-                                Icons.search,
-                                color: Colors.red,
-                              ),
-                            ),
-                            // prefixIcon: Icon(
-                            //   Icons.search,
-                            //   color: Colors.red,
-                            // ),
-                            label: Container(margin: EdgeInsets.only(left: 10),
-                              child: Text('Search'),
-                            ),
-                            border: InputBorder.none,
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: BorderSide(color: Colors.red),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                borderSide: BorderSide(
-                                  color: Colors.red,
-                                ))),
-                      ),
+                    padding: const EdgeInsets.all(20.0),
+                    child: Text(
+                      'Restaurant All',
+                      style: TextStyle(color: Colors.black, fontSize: 20),
                     ),
                   ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(16.0),
+                  //   child: Container(width: MediaQuery.of(context).size.width*0.85,
+                  //     child: TextField(
+                  //       controller: searchController,
+                  //       decoration: InputDecoration(
+                  //           suffixIcon: Container(
+                  //             margin: EdgeInsets.only(right: 30),
+                  //             child: Icon(
+                  //               Icons.search,
+                  //               color: Colors.red,
+                  //             ),
+                  //           ),
+                  //           // prefixIcon: Icon(
+                  //           //   Icons.search,
+                  //           //   color: Colors.red,
+                  //           // ),
+                  //           label: Container(margin: EdgeInsets.only(left: 10),
+                  //             child: Text('Search'),
+                  //           ),
+                  //           border: InputBorder.none,
+                  //           enabledBorder: OutlineInputBorder(
+                  //             borderRadius: BorderRadius.circular(20),
+                  //             borderSide: BorderSide(color: Colors.red),
+                  //           ),
+                  //           focusedBorder: OutlineInputBorder(
+                  //               borderRadius: BorderRadius.circular(20),
+                  //               borderSide: BorderSide(
+                  //                 color: Colors.red,
+                  //               ))),
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                     child: GridView.extent(
                       maxCrossAxisExtent: sceens * 0.5,
