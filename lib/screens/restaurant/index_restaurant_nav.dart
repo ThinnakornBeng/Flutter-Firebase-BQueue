@@ -168,7 +168,7 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
         size: 30,
       ),
       title: Text(
-        'List Queue',
+        'List',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16,
@@ -202,7 +202,7 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
         size: 30,
       ),
       title: Text(
-        'List History',
+        'History',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16,
@@ -219,7 +219,7 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
         size: 30,
       ),
       title: Text(
-        'Notifytotion',
+        'Notify',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16,

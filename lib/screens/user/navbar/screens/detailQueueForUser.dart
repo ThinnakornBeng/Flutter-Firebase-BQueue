@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
-import 'package:flutter_application_beng_queue_app/screens/user/navbar/screens/chat.dart';
+import 'package:flutter_application_beng_queue_app/screens/user/navbar/screens/chatUser.dart';
 import 'package:intl/intl.dart';
 
 class DetailQueueForUser extends StatefulWidget {
@@ -46,7 +46,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
     };
 
     await FirebaseFirestore.instance
-        .collection('chatroom')
+        .collection('chatroomTable')
         .doc(queueModel.uidUser)
         .set(chatRoomMap)
         .then((value) {
@@ -153,7 +153,7 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                                                 context,
                                                 MaterialPageRoute(
                                                   builder: (context) =>
-                                                      ChatroomPage(
+                                                      ChatroomUser(
                                                     queueModel: queueModel,
                                                     chatRoomId:
                                                         queueModel.uidUser,

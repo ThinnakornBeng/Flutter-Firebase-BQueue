@@ -87,50 +87,66 @@ class _ListQueueForRestaurantState extends State<ListQueueForRestaurant> {
       body: statusLoad
           ? MyStyle().showProgress()
           : statusHaveData
-              ? ListView.builder(
-                  itemCount: queueModels.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailQueueForRrst(
-                              queueModel: queueModels[index],
-                              uidQueue: uidQueues[index],
-                            ),
-                          ));
-                    },
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 60,
-                              height: 60,
-                              child: ClipOval(
-                                child: Image.network(
-                                  queueModels[index].urlImageUser,
-                                  fit: BoxFit.cover,
-                                ),
+              ? Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'My Queue List',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: queueModels.length,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailQueueForRrst(
+                                    queueModel: queueModels[index],
+                                    uidQueue: uidQueues[index],
+                                  ),
+                                ));
+                          },
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    width: 60,
+                                    height: 60,
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        queueModels[index].urlImageUser,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    child: Text(
+                                      "คุณ ${queueModels[index].nameUser} ได้ทำการจองคิวจากร้านของคุณแมื่อวันที่  ${changeDateToString(queueModels[index].time)} เวลา ${changeTimeToString(queueModels[index].time)}",
+                                    ),
+                                  ),
+                                  // Text(
+                                  //   ChangeData(time: queueModels[index].time)
+                                  //       .changeTimeToString(),
+                                  // ),
+                                ],
                               ),
                             ),
-                            Container(margin: EdgeInsets.only(left: 10),
-                              width: MediaQuery.of(context).size.width * 0.7,
-                              child: Text(
-                                "คุณ ${queueModels[index].nameUser} ได้ทำการจองคิวจากร้านของคุณแมื่อวันที่  ${changeDateToString(queueModels[index].time)} เวลา ${changeTimeToString(queueModels[index].time)}",
-                              ),
-                            ),
-                            // Text(
-                            //   ChangeData(time: queueModels[index].time)
-                            //       .changeTimeToString(),
-                            // ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                  ],
                 )
               : Center(child: Text("Don't have list queue data")),
     );

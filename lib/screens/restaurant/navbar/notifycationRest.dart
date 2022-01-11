@@ -61,38 +61,73 @@ class _NotifycationRestState extends State<NotifycationRest> {
       body: statusLoad
           ? MyStyle().showProgress()
           : statusHaveData
-              ? ListView.builder(
-                  itemCount: detailNotificationModels.length,
-                  itemBuilder: (context, index) => Container(
-                    child: Card(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 70,
-                            height: 70,
-                            child: Image.asset('images/logo.png'),
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
-                            child: Column(
+              ? Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'My Notify',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: detailNotificationModels.length,
+                        itemBuilder: (context, index) => Container(
+                          child: Card(
+                            child: Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Text(detailNotificationModels[index].title),
-                                  ],
+                                Container(
+                                  width: 70,
+                                  height: 70,
+                                  child: Image.asset('images/logo.png'),
                                 ),
-                                Row(
-                                  children: [
-                                    Text(detailNotificationModels[index].body),
-                                  ],
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.68,
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(width:
+                                      MediaQuery.of(context).size.width * 0.67,
+                                            child: Text(detailNotificationModels[index]
+                                                .title),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(width:
+                                      MediaQuery.of(context).size.width * 0.67,
+                                            child: Text(detailNotificationModels[index]
+                                                .body),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
+                                Container(
+                                height: 55,
+                                width:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  child: Center(
+                                    child: Icon(
+                                      Icons.notifications,
+                                      color: Colors.red,
+                                      size: 30,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 )
               : Center(
                   child: Text("Don't have detailnotification data"),

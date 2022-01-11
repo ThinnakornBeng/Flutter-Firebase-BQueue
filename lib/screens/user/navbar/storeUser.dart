@@ -80,13 +80,13 @@ class _StoreUserState extends State<StoreUser> {
               margin: EdgeInsets.only(left: 15, top: 10, right: 15),
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Text(
-                      'Restaurant All',
-                      style: TextStyle(color: Colors.black, fontSize: 20),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(20.0),
+                  //   child: Text(
+                  //     'Restaurant All',
+                  //     style: TextStyle(color: Colors.black, fontSize: 20),
+                  //   ),
+                  // ),
                   // Padding(
                   //   padding: const EdgeInsets.all(16.0),
                   //   child: Container(width: MediaQuery.of(context).size.width*0.85,

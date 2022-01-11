@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ChatRoomModel {
   final String name;
   final String userProfile;
+  final String uidRest;
   ChatRoomModel({
      this.name,
      this.userProfile,
+     this.uidRest,
   });
- 
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'userProfile': userProfile,
+      'uidRest': uidRest,
     };
   }
 
@@ -22,6 +22,7 @@ class ChatRoomModel {
     return ChatRoomModel(
       name: map['name'] ?? '',
       userProfile: map['userProfile'] ?? '',
+      uidRest: map['uidRest'] ?? '',
     );
   }
 

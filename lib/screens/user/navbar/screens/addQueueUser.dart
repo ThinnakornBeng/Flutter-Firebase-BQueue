@@ -84,10 +84,13 @@ class _AddQueueUserState extends State<AddQueueUser> {
           (event) {
             for (var item in event.docs) {
               QueueModel model = QueueModel.fromMap(item.data());
-              setState(() {
+             if (!model.queueStatus) {
+                setState(() {
                 queueModel.add(model);
               });
               amount++;
+             }
+              
 
               // print('############## QueueModel $queueModel');
               print('Amount is $amount');

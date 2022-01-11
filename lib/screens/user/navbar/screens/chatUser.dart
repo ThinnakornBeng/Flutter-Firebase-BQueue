@@ -2,18 +2,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
 
-class ChatroomPage extends StatefulWidget {
+class ChatroomUser extends StatefulWidget {
   final QueueModel queueModel;
   final String chatRoomId;
-  const ChatroomPage(
+  const ChatroomUser(
       {Key key, @required this.chatRoomId, @required this.queueModel})
       : super(key: key);
 
   @override
-  _ChatroomPageState createState() => _ChatroomPageState();
+  _ChatroomUserState createState() => _ChatroomUserState();
 }
 
-class _ChatroomPageState extends State<ChatroomPage> {
+class _ChatroomUserState extends State<ChatroomUser> {
   TextEditingController msg = new TextEditingController();
   QueueModel queueModel;
   String chatRoomId;
@@ -37,9 +37,9 @@ class _ChatroomPageState extends State<ChatroomPage> {
       };
 
       await _firestore
-          .collection('chatroom')
+          .collection('chatroomTable')
           .doc(chatRoomId)
-          .collection('chat')
+          .collection('chatTable')
           .add(message);
       msg.clear();
     } else {
@@ -59,9 +59,9 @@ class _ChatroomPageState extends State<ChatroomPage> {
         width: size.width,
         child: StreamBuilder<QuerySnapshot>(
           stream: _firestore
-              .collection('chatroom')
+              .collection('chatroomTable')
               .doc(chatRoomId)
-              .collection('chat')
+              .collection('chatTable')
               .orderBy('time', descending: false)
               .snapshots(),
           builder: (context, snapshot) {

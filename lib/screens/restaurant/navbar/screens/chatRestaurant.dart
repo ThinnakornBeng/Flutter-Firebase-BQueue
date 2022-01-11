@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/chatroom_model.dart';
-import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
 import 'package:flutter_application_beng_queue_app/model/restaurant_model.dart';
 
 class ChatroomRestaurant extends StatefulWidget {
@@ -25,6 +24,7 @@ class _ChatroomRestaurantState extends State<ChatroomRestaurant> {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   RestaurantModel restaurantModel;
   ChatRoomModel chatRoomModel;
+  String docCaht = 'orQvUMvVmifztSisfOULoCJc0mq1';
 
   @override
   void initState() {
@@ -33,6 +33,7 @@ class _ChatroomRestaurantState extends State<ChatroomRestaurant> {
     chatRoomId = widget.chatRoomId;
     restaurantModel = widget.restaurantModel;
     chatRoomModel = widget.chatRoomModel;
+    print('Chatroom Id is $chatRoomId');
   }
 
   void onSentMessage() async {
@@ -45,9 +46,9 @@ class _ChatroomRestaurantState extends State<ChatroomRestaurant> {
       };
 
       await _firestore
-          .collection('chatroom')
+          .collection('chatroomTable')
           .doc(chatRoomId)
-          .collection('chat')
+          .collection('chatTable')
           .add(message);
       msg.clear();
     } else {
@@ -67,9 +68,9 @@ class _ChatroomRestaurantState extends State<ChatroomRestaurant> {
         width: size.width,
         child: StreamBuilder<QuerySnapshot>(
           stream: _firestore
-              .collection('chatroom')
+              .collection('chatroomTable')
               .doc(chatRoomId)
-              .collection('chat')
+              .collection('chatTable')
               .orderBy('time', descending: false)
               .snapshots(),
           builder: (context, snapshot) {
