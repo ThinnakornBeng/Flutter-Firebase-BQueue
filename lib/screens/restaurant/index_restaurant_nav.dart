@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/user_model.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/account_restaurant.dart';
+import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/chatDataSceens.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/lisiHistoryForRest.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/listQueueForRestaurant.dart';
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/notifycationRest.dart';
@@ -22,6 +23,7 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
     StoreRestaurant(),
     ListQueueForRestaurant(),
     ListHistoryForRestaurant(),
+    ChatSceens(),
     NotifycationRest(),
   ];
   int indexPage = 0;
@@ -136,6 +138,7 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
           storeRestaurantNav(),
           listQueueRestaurantNav(),
           listHistoryRestaurantNav(),
+          messageRestaurantNav(),
           accountRestaurantNav(),
         ],
       );
@@ -166,6 +169,23 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
       ),
       title: Text(
         'List Queue',
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    );
+  }
+
+  BottomNavigationBarItem messageRestaurantNav() {
+    return BottomNavigationBarItem(
+      backgroundColor: Colors.red,
+      icon: Icon(
+        Icons.message,
+        size: 30,
+      ),
+      title: Text(
+        'Chat',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16,

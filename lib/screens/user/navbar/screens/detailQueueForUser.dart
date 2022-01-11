@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/model/queue_model.dart';
+import 'package:flutter_application_beng_queue_app/screens/user/navbar/screens/chat.dart';
 import 'package:intl/intl.dart';
 
 class DetailQueueForUser extends StatefulWidget {
@@ -17,6 +18,16 @@ class DetailQueueForUser extends StatefulWidget {
 class _DetailQueueForUserState extends State<DetailQueueForUser> {
   QueueModel queueModel;
   int sumQueue;
+  List<String> users = [];
+
+  String chatRoomId(String user1, String user2) {
+    if (user1[0].toLowerCase().codeUnits[0] >
+        user2[0].toLowerCase().codeUnits[0]) {
+      return "$user1$user2";
+    } else {
+      return "$user2$user1";
+    }
+  }
 
   @override
   void initState() {
@@ -24,6 +35,23 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
     super.initState();
     this.queueModel = widget.queueModel;
     this.sumQueue = widget.sumQueue;
+  }
+
+  void onAddChatRoom() async {
+    Map<String, dynamic> chatRoomMap = {
+      'name': queueModel.nameUser,
+      'userProfile': queueModel.urlImageUser,
+      'uidRest': queueModel.uidRest,
+      // 'uidRest': queueModel.uidRest,
+    };
+
+    await FirebaseFirestore.instance
+        .collection('chatroom')
+        .doc(queueModel.uidUser)
+        .set(chatRoomMap)
+        .then((value) {
+      print('Add Success');
+    });
   }
 
   @override
@@ -112,13 +140,26 @@ class _DetailQueueForUserState extends State<DetailQueueForUser> {
                                       ),
                                     ],
                                   ),
-                                  Container(margin: EdgeInsets.only(right: 15),
+                                  Container(
+                                    margin: EdgeInsets.only(right: 15),
                                     height: 30,
                                     width: 30,
                                     // color: Colors.red,
                                     child: Center(
                                       child: IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            onAddChatRoom();
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ChatroomPage(
+                                                    queueModel: queueModel,
+                                                    chatRoomId:
+                                                        queueModel.uidUser,
+                                                  ),
+                                                ));
+                                          },
                                           icon: Icon(
                                             Icons.message,
                                             color: Colors.blue,
