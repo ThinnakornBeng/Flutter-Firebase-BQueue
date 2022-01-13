@@ -90,87 +90,100 @@ class _ListQueueUserState extends State<ListQueueUser> {
       body: load
           ? MyStyle().showProgress()
           : haveQueue
-              ? ListView.builder(
-                  itemCount: queueModels.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () async {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DetailQueueForUser(
-                              queueModel: queueModelsSorts[index],
-                              sumQueue: queueModels.length,
-                            ),
-                          ));
-                    },
-                    child: Container(
-                      height: 80,
-                      margin: EdgeInsets.only(right: 10, left: 10),
-                      child: Card(
-                        shadowColor: Colors.red,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 120,
-                              child: ClipOval(
-                                child: Image.network(
-                                    queueModels[index].urlImageRest),
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(left: 10),
-                              width: MediaQuery.of(context).size.width * 0.56,
-                              child: Column(
-                                children: [
-                                  // Row(
-                                  //   children: [
-                                  //     Container(
-                                  //       width:
-                                  //           MediaQuery.of(context).size.width *
-                                  //               0.54,
-                                  //       margin: EdgeInsets.only(top: 5),
-                                  //       child: Text(
-                                  //           'คุณ : ${queueModelsSorts[index].nameUser}'),
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.54,
-                                          margin: EdgeInsets.only(
-                                            top: 5,
-                                          ),
-                                          child: Text(
-                                              'คุณได้จองคิวจากร้าน ${queueModelsSorts[index].nameRest}')),
-                                    ],
+              ? Column(
+                children: [ Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'My Queue List',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16),
+                      ),
+                    ),
+                  Expanded(
+                    child: ListView.builder(
+                        itemCount: queueModels.length,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () async {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DetailQueueForUser(
+                                    queueModel: queueModelsSorts[index],
+                                    sumQueue: queueModels.length,
                                   ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.54,
-                                          margin: EdgeInsets.only(
-                                            top: 5,
-                                          ),
-                                          child: Text(
-                                              'เมื่อ ${changeTimeToString(queueModelsSorts[index].time)}')),
-                                    ],
+                                ));
+                          },
+                          child: Container(
+                            height: 80,
+                            margin: EdgeInsets.only(right: 10, left: 10),
+                            child: Card(
+                              shadowColor: Colors.red,
+                              child: Row(
+                                children: [
+                                  Container(
+                                    width: 120,
+                                    child: ClipOval(
+                                      child: Image.network(
+                                          queueModels[index].urlImageRest),
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.only(left: 10),
+                                    width: MediaQuery.of(context).size.width * 0.56,
+                                    child: Column(
+                                      children: [
+                                        // Row(
+                                        //   children: [
+                                        //     Container(
+                                        //       width:
+                                        //           MediaQuery.of(context).size.width *
+                                        //               0.54,
+                                        //       margin: EdgeInsets.only(top: 5),
+                                        //       child: Text(
+                                        //           'คุณ : ${queueModelsSorts[index].nameUser}'),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.54,
+                                                margin: EdgeInsets.only(
+                                                  top: 5,
+                                                ),
+                                                child: Text(
+                                                    'คุณได้จองคิวจากร้าน ${queueModelsSorts[index].nameRest}')),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.54,
+                                                margin: EdgeInsets.only(
+                                                  top: 5,
+                                                ),
+                                                child: Text(
+                                                    'เมื่อ ${changeTimeToString(queueModelsSorts[index].time)}')),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
                   ),
-                )
+                ],
+              )
               : Center(
                   child: Text('No Queue'),
                 ),

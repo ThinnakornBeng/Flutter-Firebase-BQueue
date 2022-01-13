@@ -61,7 +61,7 @@ class _ChatroomRestaurantState extends State<ChatroomRestaurant> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('คุณ ${chatRoomModel.name}'),
+        title: Text('Send message to ${chatRoomModel.name}'),
       ),
       body: Container(
         height: size.height / 1.25,
@@ -88,7 +88,7 @@ class _ChatroomRestaurantState extends State<ChatroomRestaurant> {
           },
         ),
       ),
-      bottomNavigationBar: Container(
+      floatingActionButton: Container(margin: EdgeInsets.only(left: 40,top:100),
         height: size.height / 8,
         width: size.height,
         alignment: Alignment.center,

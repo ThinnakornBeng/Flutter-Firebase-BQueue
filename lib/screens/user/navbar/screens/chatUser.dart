@@ -52,7 +52,7 @@ class _ChatroomUserState extends State<ChatroomUser> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text('ร้าน ${queueModel.nameRest}'),
+        title: Text('Send message to ${queueModel.nameRest}'),
       ),
       body: Container(
         height: size.height / 1.25,
@@ -79,7 +79,8 @@ class _ChatroomUserState extends State<ChatroomUser> {
           },
         ),
       ),
-      bottomNavigationBar: Container(
+      floatingActionButton: Container(
+        margin: EdgeInsets.only(left: 40, top: 100),
         height: size.height / 8,
         width: size.height,
         alignment: Alignment.center,

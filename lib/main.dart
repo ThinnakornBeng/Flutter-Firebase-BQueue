@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_beng_queue_app/screens/authentication.dart';
-import 'package:flutter_application_beng_queue_app/screens/user/navbar/search.dart';
+import 'package:flutter_application_beng_queue_app/screens/user/search.dart';
 
 main() => runApp(MyApp());
 

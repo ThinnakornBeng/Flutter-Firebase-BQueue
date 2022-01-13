@@ -61,53 +61,66 @@ class _NotificationUserState extends State<NotificationUser> {
         body: statusLoad
             ? MyStyle().showProgress()
             : statusHaveData
-                ? ListView.builder(
-                    itemCount: detailNotificationModels.length,
-                    itemBuilder: (context, index) => Container(
-                      child: Card(
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 70,
-                              height: 70,
-                              child: Image.asset('images/logo.png'),
-                            ),
-                            Container(
-                              width: MediaQuery.of(context).size.width * 0.78,
-                              child: Column(
+                ? Column(
+                  children: [ Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        'My Notify',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w500, fontSize: 16),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                          itemCount: detailNotificationModels.length,
+                          itemBuilder: (context, index) => Container(
+                            child: Card(
+                              child: Row(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.78,
-                                        child: Text(
-                                            detailNotificationModels[index]
-                                                .title),
-                                      ),
-                                    ],
+                                  Container(
+                                    width: 70,
+                                    height: 70,
+                                    child: Image.asset('images/logo.png'),
                                   ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        width:
-                                            MediaQuery.of(context).size.width *
-                                                0.78,
-                                        child: Text(
-                                            detailNotificationModels[index]
-                                                .body),
-                                      ),
-                                    ],
+                                  Container(
+                                    width: MediaQuery.of(context).size.width * 0.78,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width:
+                                                  MediaQuery.of(context).size.width *
+                                                      0.78,
+                                              child: Text(
+                                                  detailNotificationModels[index]
+                                                      .title),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Container(
+                                              width:
+                                                  MediaQuery.of(context).size.width *
+                                                      0.78,
+                                              child: Text(
+                                                  detailNotificationModels[index]
+                                                      .body),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
-                          ],
+                          ),
                         ),
-                      ),
                     ),
-                  )
+                  ],
+                )
                 : Center(child: Text("Don't have detailnotification data")));
   }
 }
