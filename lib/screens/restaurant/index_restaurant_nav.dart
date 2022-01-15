@@ -12,6 +12,7 @@ import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/not
 import 'package:flutter_application_beng_queue_app/screens/restaurant/navbar/store_restaurant.dart';
 import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
+import 'package:flutter_application_beng_queue_app/utility/notifyDialog.dart';
 
 class RestaurantNVA extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _RestaurantNVAState extends State<RestaurantNVA> {
       String bodyNoti = event.notification.body;
       print(
           'Form Fontend User titleNoti == $titleNoti, bodeyNoti == $bodyNoti');
-      normalDialog(context, '$titleNoti \n $bodyNoti');
+      notifyDialog(context, '$titleNoti $bodyNoti');
     });
 
     // for BlackEnd Service

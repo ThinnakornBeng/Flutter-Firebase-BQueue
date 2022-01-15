@@ -12,6 +12,7 @@ import 'package:flutter_application_beng_queue_app/screens/user/search.dart';
 import 'package:flutter_application_beng_queue_app/screens/user/navbar/storeUser.dart';
 import 'package:flutter_application_beng_queue_app/utility/dialog.dart';
 import 'package:flutter_application_beng_queue_app/utility/my_style.dart';
+import 'package:flutter_application_beng_queue_app/utility/notifyDialog.dart';
 
 class UserNVA extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _UserNVAState extends State<UserNVA> {
       String bodyNoti = event.notification.body;
       print(
           'Form Fontend User titleNoti == $titleNoti, bodeyNoti == $bodyNoti');
-      normalDialog(context, '$titleNoti \n $bodyNoti');
+      notifyDialog(context, '$titleNoti $bodyNoti');
     });
 
     // for BlackEnd Service
@@ -90,7 +91,8 @@ class _UserNVAState extends State<UserNVA> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: Container(height: 20,
+        leading: Container(
+          height: 20,
           decoration: BoxDecoration(
             color: Colors.red[200],
             borderRadius: BorderRadiusDirectional.circular(360),
